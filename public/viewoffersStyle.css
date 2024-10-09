@@ -1,0 +1,83 @@
+/* Resetting some default styles */
+body, h1, p, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text color */
+    font-family: Arial, sans-serif; /* Font family */
+    padding: 2%; /* Padding around the body */
+}
+
+/* Heading styles */
+h1 {
+    color: #f1c40f; /* Yellow color for headings */
+    font-size: 2.5em; /* Larger font size for heading */
+    text-align: center; /* Center align heading */
+    margin-bottom: 2%; /* Space below heading */
+}
+
+/* Offers container styles */
+#offersContainer {
+    display: flex;
+    flex-direction: column; /* Stack offers vertically */
+    gap: 1.5em; /* Space between offers */
+}
+
+/* Offer card styles */
+.offer {
+    background-color: #1e1e1e; /* Darker background for each offer */
+    border-radius: 5px; /* Rounded corners */
+    padding: 2%; /* Padding inside offer card */
+    border: 1px solid #444444; /* Subtle border */
+}
+
+/* Text styles for offer details */
+.offer p {
+    margin: 0.5em 0; /* Space between paragraphs */
+}
+
+/* Button styles */
+.viewProfileButton {
+    background-color: #f39c12; /* Orange background for buttons */
+    color: #ffffff; /* White text for buttons */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 0.8em; /* Padding inside buttons */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth background change */
+}
+
+/* Button hover effect */
+.viewProfileButton:hover {
+    background-color: #e67e22; /* Darker orange on hover */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) { /* Tablet and mobile styles */
+    h1 {
+        font-size: 2em; /* Smaller heading on smaller screens */
+    }
+
+    .offer {
+        padding: 1.5%; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) { /* Mobile styles */
+    h1 {
+        font-size: 1.8em; /* Further smaller heading for mobile */
+    }
+
+    .offer {
+        padding: 1%; /* Further adjust padding for mobile */
+    }
+
+    .viewProfileButton {
+        padding: 0.6em; /* Smaller padding for buttons */
+    }
+}

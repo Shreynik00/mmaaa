@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Askit</title>
+    <link rel="stylesheet" href="UsersetupStyles.css">
+</head>
+<body>
+    <div>
+        <h1>Askit</h1>
+        <h4>
+              Describe your task, review your offers & choose a service provider best you.
+        </h4>
+        
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <input type="text" id="signupUsername" placeholder="Username" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit">Join Askit</button>
+            </form>
+            <div id="signupMessage" style="color:red;"></div> <!-- For displaying signup message -->
+        
+    </div>
+
+    <script>
+// Sign Up
+document.getElementById('signupForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const username = document.getElementById('signupUsername').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Clear any previous messages
+    document.getElementById('signupMessage').textContent = '';
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        document.getElementById('signupMessage').textContent = "Passwords do not match!";
+        return;
+    }
+
+    // Send the sign-up request
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+    });
+
+    const data = await response.json();
+
+    // Display signup message in HTML instead of alert
+    document.getElementById('signupMessage').textContent = data.message;
+
+    // Clear form fields if successful
+    if (data.message === 'User registered successfully.') {  // Match this message with your server's response
+        document.getElementById('signupUsername').value = '';
+        document.getElementById('signupEmail').value = '';
+        document.getElementById('signupPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+
+        // Redirect to login page after successful signup
+        window.location.href = 'login.html';
+    }
+});
+
+    </script>
+</body>
+</html>

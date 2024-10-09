@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <link rel="stylesheet" href="userDetailStyles.css">
+</head>
+<body>
+    <header>
+        <h1>User Details</h1>
+    </header>
+    <div id="userInfoBox">
+        <div id="usernameDisplay"></div>
+        <div id="emailDisplay"></div>
+    </div>
+    
+    <section id="userDetails">
+        <!-- User details will be injected here -->
+    </section>
+
+    <script>
+        // Function to fetch user details based on userId from URL
+        async function fetchUserDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('userId');
+
+            const response = await fetch(`/user/${userId}`); // Call the API to fetch user details
+            const user = await response.json();
+
+            if (user) {
+                document.getElementById('userDetails').innerHTML = `
+                    <div class="task-item">
+                        <p><strong>Username:</strong> ${user.username}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                    </div>
+                `;
+            } else {
+                document.getElementById('userDetails').innerHTML = `<p>User not found.</p>`;
+            }
+        }
+
+        fetchUserDetails();
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Offers</title>
+    <link rel="stylesheet" href="viewOfferStyles.css">
+    <style>
+        .username-button {
+            padding: 10px 20px;
+            background-color: #ffffff; /* Button color */
+            color: rgb(0, 0, 0); /* Text color */
+            text-align: center;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 16px; /* Font size */
+        }
+
+        .username-button:hover {
+            background-color: #8d9395; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>View Submitted Offers</h1>
+        <div id="usernameDisplay"></div>
+    </header>
+    <section id="offerList">
+        <!-- Offers will be injected here -->
+    </section>
+
+    <script>
+        // Get task ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('taskId');
+
+        // Fetch and display offers for the task
+        async function fetchOffers() {
+            if (!taskId) {
+                console.error('Task ID not provided');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/offers/${taskId}`); // Correct the URL
+                if (!response.ok) {
+                    throw new Error('Failed to fetch offers');
+                }
+
+                const offers = await response.json();
+                const offerList = document.getElementById('offerList');
+
+                if (offers.length === 0) {
+                    offerList.innerHTML = '<p>No offers submitted for this task yet.</p>'; // Fix HTML string
+                } else {
+                    offerList.innerHTML = offers.map(offer => 
+                        `<div class="offer-item">
+                            <p><strong>Username:</strong> <button class="username-button" onclick="redirectToDetail('${offer.userId}')">${offer.username}</button></p>
+                            <p><strong>Deadline:</strong> ${offer.deadline} days</p>
+                            <p><strong>Pitch:</strong> ${offer.pitch}</p>
+                        </div>`
+                    ).join('');
+                }
+            } catch (error) {
+                console.error('Error fetching offers:', error);
+            }
+        }
+
+        // Redirect to the user detail page
+        function redirectToDetail(userId) {
+            window.location.href = `viewDetailToContact.html?userId=${userId}`;
+        }
+
+        fetchOffers();
+    </script>
+</body>
+</html>

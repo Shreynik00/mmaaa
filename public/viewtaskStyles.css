@@ -1,0 +1,132 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+header {
+    background-color: #1f1f1f;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 28px;
+}
+
+#usernameDisplay {
+    color: #b3b3b3;
+    margin-top: 10px;
+}
+
+/* Task List Container */
+#taskList {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* Individual Task Styles */
+.task-item {
+    background-color: #2a2a2a;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #333;
+}
+
+.task-item h3 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.task-item p {
+    color: #cccccc;
+    margin: 5px 0;
+}
+
+/* Buttons and Posted by Username Container */
+.button-group {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between; /* Space buttons and 'Posted by' appropriately */
+    margin-top: 15px; /* Spacing from task details */
+}
+
+.button-group button,
+.button-group a {
+    flex: 1; /* Make buttons equal width */
+    padding: 8px 10px; /* Reduced padding for smaller buttons */
+    margin-right: 10px; /* Spacing between buttons */
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px; /* Reduced font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Remove margin from last button */
+.button-group button:last-child,
+.button-group a:last-child {
+    margin-right: 0;
+}
+
+/* Hover effect for buttons */
+.button-group button:hover,
+.button-group a:hover {
+    background-color: #5a5a5a;
+}
+
+/* Posted by Username - Aligned in the same line as buttons */
+.usernam {
+    font-size: 12px; /* Smaller font for 'Posted by' */
+    color: #999999;
+    margin-left: 10px;
+    white-space: nowrap; /* Ensure text stays on one line */
+    text-align: right;
+}
+
+.usernam a {
+    color: #cccccc;
+    text-decoration: underline; /* Underline for clickable username */
+}
+
+/* Responsive layout for mobile and tablets */
+@media screen and (max-width: 768px) {
+    #taskList {
+        padding: 10px;
+    }
+
+    .task-item {
+        padding: 15px;
+    }
+
+    .task-item h3 {
+        font-size: 20px;
+    }
+
+    .button-group {
+        flex-wrap: wrap; /* Stack buttons and 'Posted by' vertically on smaller screens */
+    }
+
+    .button-group button,
+    .button-group a {
+        font-size: 9px; /* Even smaller buttons on mobile */
+        padding: 6px 8px;
+    }
+
+    .usernam {
+        margin-top: 20px;
+        text-align: left; /* Align 'Posted by' to the left on mobile */
+    }
+}

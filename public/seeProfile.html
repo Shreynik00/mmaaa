@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View User Profile</title>
+   
+</head>
+<body>
+    <h1>User Profile</h1>
+    <div id="profileContainer"></div>
+
+    <script>
+        // Get the userId from the URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId'); // Extract userId from the URL
+    
+        // Function to fetch user profile based on userId
+        async function fetchUserProfile() {
+            if (!userId) {
+                document.getElementById('profileContainer').innerHTML = '<p>Error: User ID is missing.</p>';
+                return; // Exit the function if userId is not available
+            }
+    
+            async function fetchUserProfile(userId) {
+    try {
+        // Fetch the user profile data from the backend API
+        const response = await fetch(`/users/${userId}`); // Using a relative URL
+
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error(`Failed to fetch user profile: ${response.statusText}`);
+        }
+
+        // Parse the response as JSON
+        const user = await response.json();
+
+        // Get the container where the profile will be displayed
+        const profileContainer = document.getElementById('profileContainer');
+
+        // Display the fetched user details (username and email)
+        profileContainer.innerHTML = `
+            <p><strong>Username:</strong> ${user.username}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+        `;
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+
+        // Display an error message in case the profile fetch fails
+        document.getElementById('profileContainer').innerHTML = '<p>Error fetching profile information. Please try again later.</p>';
+    }
+}
+
+// Call the function with a user ID (make sure to replace 'userId' with the actual ID you want to fetch)
+fetchUserProfile('userId'); // Replace 'userId' with the actual ID
+
+    
+        // Call the function to fetch and display the user profile
+        fetchUserProfile();}
+    </script>
+    
+</body>
+</html>

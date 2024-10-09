@@ -1,0 +1,72 @@
+/* Global settings */
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    color: #f0f0f0;
+    font-size: 2rem;
+    margin: 0;
+}
+
+#usernameDisplay {
+    color: #b0b0b0;
+    font-size: 1rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Offer list container */
+#offerList {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Individual offer item box */
+.offer-item {
+    background-color: #252525;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.offer-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.6);
+}
+
+.offer-item p {
+    margin: 10px 0;
+    color: #d0d0d0;
+}
+
+.offer-item p strong {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #offerList {
+        padding: 0 10px;
+    }
+
+    .offer-item {
+        padding: 10px;
+    }
+}

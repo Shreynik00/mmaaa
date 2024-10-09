@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'SF Pro Display', sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #fff; /* White text color */
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #080808, #222225); /* Dark gradient */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px; /* Header font size */
+            font-weight: 700; /* Bold font */
+        }
+
+        .task-details-container {
+            max-width: 800px; /* Max width of details container */
+            margin: 20px auto; /* Center the container */
+            padding: 20px; /* Padding inside container */
+            border-radius: 10px; /* Rounded corners */
+            background-color: #1c1c1c; /* Dark background for container */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        }
+
+        .task-title {
+            font-size: 24px; /* Font size for task title */
+            font-weight: 700; /* Bold font */
+            margin-bottom: 10px; /* Space below title */
+        }
+
+        .task-description, .task-budget, .task-deadline {
+            font-size: 16px; /* Font size for details */
+            margin-bottom: 10px; /* Space below each detail */
+        }
+
+        .back-button {
+            margin-top: 20px; /* Space above button */
+            padding: 10px 20px; /* Padding for button */
+            background-color: #fff; /* Button background */
+            color: #000; /* Button text color */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-weight: 500; /* Medium font weight */
+            transition: background-color 0.3s, transform 0.2s; /* Transition for effects */
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0; /* Lighten button on hover */
+            transform: scale(1.05); /* Scale up on hover */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Task Details</h1>
+    </header>
+    <section class="task-details-container" id="taskDetails">
+        <!-- Task details will be injected here via JavaScript -->
+        <div class="loading">Loading task details...</div>
+    </section>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name); // Get value for the specified parameter
+        }
+
+        // Fetch task details by ID
+        async function fetchTaskDetails(taskId) {
+            try {
+                const response = await fetch(`http://localhost:3000/task/${taskId}`); // Fetch task details from server
+                const task = await response.json(); // Parse JSON response
+                displayTaskDetails(task); // Display the task details
+            } catch (error) {
+                console.error('Error fetching task details:', error); // Log any errors
+            }
+        }
+
+        // Function to display task details
+        function displayTaskDetails(task) {
+            const taskDetailsContainer = document.getElementById('taskDetails');
+            taskDetailsContainer.innerHTML = `
+                <h2 class="task-title">${task.title}</h2>
+                <p class="task-description">Description: ${task.description}</p>
+                <p class="task-budget">Budget: ${task.budget}</p>
+                <p class="task-deadline">Deadline: ${task.deadline}</p>
+                <button class="back-button" onclick="window.history.back()">Back</button>
+            `; // Inject HTML to show task details
+        }
+
+        // On page load, fetch the task ID from the URL and load the task details
+        const taskId = getUrlParameter('id');
+        if (taskId) {
+            fetchTaskDetails(taskId); // Fetch details if task ID is present
+        } else {
+            document.getElementById('taskDetails').innerHTML = '<p>Task ID is missing!</p>'; // Handle missing ID
+        }
+    </script>
+</body>
+</html>

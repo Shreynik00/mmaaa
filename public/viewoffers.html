@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers for Task</title>
+    <link rel="stylesheet" href="viewoffersStyle.css">
+</head>
+<body>
+    <h1>Offers for Task</h1>
+    <div id="offersContainer"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('taskId'); // Extract taskId from URL
+
+        async function fetchOffers() { 
+            try {
+                const response = await fetch(`http://localhost:3000/offers/${taskId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch offers');
+                }
+                const offers = await response.json();
+                const offersContainer = document.getElementById('offersContainer');
+
+                if (offers.length === 0) {
+                    offersContainer.innerHTML = '<p>No offers found for this task.</p>';
+                } else {
+                    offersContainer.innerHTML = offers.map(offer => `
+                        <div class="offer">
+                            <p><strong>Username:</strong> ${offer.username}</p>
+                            <p><strong>Deadline:</strong> ${offer.deadline}</p>
+                            <p><strong>Pitch:</strong> ${offer.pitch}</p>
+                            <button class="viewProfileButton" data-userid="${offer.userId}">View Profile</button>
+                        </div>
+                    `).join('');
+
+                    // Add event listeners to "View Profile" buttons
+                    document.querySelectorAll('.viewProfileButton').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            const userId = event.target.getAttribute('data-userid');
+                            // Redirect to SeeProfile.html with userId as a query parameter
+                            window.location.href = `SeeProfile.html?userId=${userId}`;
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching offers:', error);
+            }
+        }
+
+        fetchOffers();
+    </script>
+</body>
+</html>

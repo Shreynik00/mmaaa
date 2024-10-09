@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make an Offer</title>
+    <link href="make-offerStyles.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 align="center">Make an Offer for Task</h1>
+    </header>
+    <section class="offer-form-container">
+        <form id="offerForm">
+            <input type="hidden" id="taskId" value="" />
+            <input type="hidden" id="username" value="" /> <!-- Store username -->
+
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" id="Name" name="Name" placeholder="Enter your Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="deadline">Maximum Deadline (in days)</label>
+                <input type="number" id="deadline" name="deadline" placeholder="Enter maximum deadline" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pitch">Pitch (Why should you get the task?)</label>
+                <textarea id="pitch" name="pitch" rows="4" placeholder="Explain what you can do better for this task" required></textarea>
+            </div>
+
+            <div class="button-container">
+                <button class="submit-button" type="submit">Submit</button>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        // Extract the task ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('id');
+        document.getElementById('taskId').value = taskId; // Populate the taskId hidden field
+
+        // Fetch current logged-in username from the server
+        async function fetchUsername() {
+            try {
+                const response = await fetch('http://localhost:3000/current-username', {
+                    method: 'GET',
+                    credentials: 'include' // Include credentials for session management
+                });
+                
+                if (response.status === 401) {
+                    throw new Error('User not logged in.');
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch username.');
+                }
+                
+                const data = await response.json();
+                document.getElementById('username').value = data.username; // Populate the hidden username field
+            } catch (error) {
+                console.error('Error fetching username:', error);
+            }
+        }
+
+        // Fetch the username when the page loads
+        window.onload = fetchUsername;
+
+        // Handle form submission
+        document.getElementById('offerForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const Name = document.getElementById('Name').value;
+            const deadline = document.getElementById('deadline').value;
+            const pitch = document.getElementById('pitch').value;
+            const username = document.getElementById('username').value;
+            const taskId = document.getElementById('taskId').value;
+
+            const offer = {
+                taskId,
+                username, // Include username
+                Name,
+                deadline,
+                pitch
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/submit-offer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(offer)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit the offer.');
+                }
+
+                // Redirect to view task page after successful submission
+                window.location.href = `/viewtask.html?username=${username}`;
+            } catch (error) {
+                console.error('Error submitting offer:', error);
+            }
+        });
+    </script>
+</body>
+</html>

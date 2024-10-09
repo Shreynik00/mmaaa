@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Tasks</title>
+    <link rel="stylesheet" href="viewtaskStyles.css">
+</head>
+<body>
+    <header>
+        <h1>View Tasks</h1>
+        <div id="usernameDisplay"></div>
+    </header>
+    <section id="taskList">
+        <!-- Task list will be injected here -->
+    </section>
+
+    <script>
+        // Get username from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+      
+
+        // Fetch and display tasks
+        async function fetchTasks() {
+            const response = await fetch('/tasks');
+            const tasks = await response.json();
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = tasks.map(task => `
+                <div class="task-item">
+                    <h3>${task.title}</h3>
+                    <p>Budget: ${task.budget}</p>
+                    <p>Deadline: ${task.deadline}</p>
+                     
+                        <div class="button-group">
+    <a href="make-offer.html?id=${task._id}" class="offer-btn">Make an Offer</a>
+    <button onclick="viewTaskDetails('${task._id}')">View More</button>
+    <button class="leave-message-btn" onclick="leaveMessage('${task.userId}', '${task.username}')">Leave a Message</button>
+    <p class="usernam">Posted by: <a href="user-details.html?userId=${task.userId}">${task.username}</a></p>
+</div>
+                   
+                   
+                </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to redirect to the task details page
+        function viewTaskDetails(taskId) {
+            window.location.href = `task-details.html?id=${taskId}`; // Redirect to Task Details page
+        }
+
+        // Function to redirect to the submitted offers page
+        function viewSubmittedOffers(taskId) {
+            window.location.href = `view-offers.html?taskId=${taskId}`; // Redirect to View Offers page
+        }
+        function leaveMessage(taskOwnerId, taskOwnerUsername) {
+            window.location.href = `leave-message.html?userId=${taskOwnerId}&username=${taskOwnerUsername}`; // Redirect with task owner details
+        }
+
+        fetchTasks();
+    </script>
+</body>
+</html>
