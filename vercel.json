@@ -4,16 +4,20 @@
     {
       "src": "api/displaydata.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/displaydata.js"
+      "src": "/api/(.*)", 
+      "dest": "/api/displaydata.js"
+    },
+    {
+      "src": "/",
+      "dest": "/api/displaydata.js"
+    },
+    {
+      "src": "/login",
+      "dest": "/public/login.html"
     },
     {
       "src": "/(.*)",
