@@ -1,20 +1,23 @@
 {
-  "name": "figma",
-  "version": "1.0.0",
-  "main": "displaydata.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "Shreynik Jain",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "express-session": "^1.18.0",
-    "mongodb": "^6.9.0",
-    "mongoose": "^8.7.0",
-    "path": "^0.12.7"
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/displaydata.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/displaydata.js"
+    },
+    {
+      "src": "/",
+      "dest": "/public/login.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
 }
