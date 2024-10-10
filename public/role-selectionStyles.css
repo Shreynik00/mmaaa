@@ -1,0 +1,169 @@
+/* Global settings */
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #ffffff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+p{
+    font-size: 12px;
+}
+
+#continueButton {
+    display: block; /* Make the button a block element */
+    margin: 20px auto; /* Center the button horizontally with auto margins */
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 16px; /* Font size for the button text */
+    background-color: #f0f0f0; /* Light background for the button */
+    color: #121212; /* Dark text for contrast */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for clickable button */
+}
+
+#continueButton:hover {
+    background-color: #e0e0e0; /* Lighter on hover */
+}
+
+/* Container settings */
+div {
+    max-width: 530px;
+    width: 83%;
+    padding: 20px;
+    background-color: #252525;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+    margin: 27px auto;
+}
+#mainbox{
+    max-width: 530px;
+    width: 83%;
+    background-color: #252525;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+   
+    height: 80%;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+}
+
+input::placeholder {
+    color: #b0b0b0;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4caf50; /* Green outline when focused */
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d7e3d8;
+}
+
+/* Profile section */
+#userProfile {
+    margin-top: 20px;
+}
+
+#userProfile p {
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Responsive design for tablets and smaller screens */
+@media (max-width: 768px) {
+    div {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    input {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+/* Responsive design for mobile phones */
+@media (max-width: 480px) {
+    div {
+        padding: 12px;
+        max-width: 95%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    input {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+}
