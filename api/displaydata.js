@@ -3,27 +3,64 @@ const { MongoClient, ObjectId } = require('mongodb');
 const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
 
-// Connection URI for MongoDB
-const uri = process.env.MONGODB_URI;
-//'mongodb+srv://Shreynik:Dinku2005@cluster0.xh7s8.mongodb.net/';
-const client = new MongoClient(uri);
-let collection, usersCollection, offersCollection, messagesCollection;
+// Enable CORS to allow external websites to interact with your API
+app.use(cors({
+    origin: '*', // Adjust this to the specific origin(s) that should have access, e.g., 'https://your-website.com'
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration
+// MongoDB Connection URI (ensure this is set in Vercel's environment variables)
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+let collection, usersCollection, offersCollection, messagesCollection;
+
+// Session configuration (for production use Redis, or switch to JWT)
 app.use(session({
-    secret: 'your-secret-key',
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // Set to true if using HTTPS
 }));
+
+// Connect to MongoDB once at the start
+async function connectDB() {
+    try {
+        await client.connect();
+        const database = client.db('Freelancer');
+        collection = database.collection('one'); // Tasks
+        usersCollection = database.collection('users'); // Users
+        offersCollection = database.collection('Offer'); // Offers
+        messagesCollection = database.collection('messages'); // Messages
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
+}
+
+connectDB();
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Example API route to check if the server is running
+app.get('/ping', (req, res) => {
+    res.json({ message: 'API is running!' });
+});
+
+// API routes (e.g., /login, /register, /tasks, etc.) go here
+// ...
+
+// Set the port based on the environment (Vercel assigns a port automatically)
+const port = process.env.PORT || 3000;
 
 // api/displaydata.js
 module.exports = (req, res) => {
@@ -321,7 +358,8 @@ app.post('/add-task', async (req, res) => {
     }
 });
 
-/* Start the server
+
 app.listen(port, () => { 
     console.log(`Server is running on port ${port}`);
-});*/
+});
+
